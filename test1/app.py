@@ -6,6 +6,12 @@ import os
 if 'todos' not in st.session_state:
     st.session_state.todos = []
 
+# Initialize settings if they don't exist
+if 'settings' not in st.session_state:
+    st.session_state.settings = {
+        'add_button_color': '#4CAF50'  # Default green color
+    }
+
 def save_todos():
     with open('todos.json', 'w') as f:
         json.dump(st.session_state.todos, f)
@@ -19,6 +25,16 @@ def load_todos():
 load_todos()
 
 st.title("📝 Simple Todo App")
+
+# Settings section
+with st.expander("⚙️ Settings"):
+    st.subheader("Customize Colors")
+    add_button_color = st.color_picker(
+        "Add Button Color",
+        value=st.session_state.settings['add_button_color'],
+        key="add_button_color"
+    )
+    st.session_state.settings['add_button_color'] = add_button_color
 
 # Add new todo
 with st.form("add_todo_form"):
@@ -42,15 +58,26 @@ for i, todo in enumerate(st.session_state.todos):
             save_todos()
             st.rerun()
 
-# Add some styling
-st.markdown("""
+# Add styling with dynamic colors
+st.markdown(f"""
 <style>
-    .stButton>button {
-        background-color: #ff4b4b;
+    .stButton>button {{
         color: white;
-    }
-    .stButton>button:hover {
+    }}
+    /* Add button styling */
+    div[data-testid="stFormSubmitButton"] button {{
+        background-color: {st.session_state.settings['add_button_color']};
+    }}
+    div[data-testid="stFormSubmitButton"] button:hover {{
+        background-color: {st.session_state.settings['add_button_color']};
+        opacity: 0.8;
+    }}
+    /* Delete button styling */
+    div[data-testid="stButton"] button {{
+        background-color: #ff4b4b;
+    }}
+    div[data-testid="stButton"] button:hover {{
         background-color: #ff0000;
-    }
+    }}
 </style>
 """, unsafe_allow_html=True) 
