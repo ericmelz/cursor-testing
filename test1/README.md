@@ -45,12 +45,12 @@ A simple, customizable todo application built with Streamlit and Dockerized for 
 
 1. **Create a k3d cluster**:
    ```bash
-   k3d cluster create dev -p "7777:80@loadbalancer"
+   k3d cluster create todo-cluster -p "7777:80@loadbalancer"
    ```
 
 2. **Load the Docker image into k3d**:
    ```bash
-   k3d image import todo-app:latest -c dev
+   k3d image import todo-app:latest -c todo-cluster
    ```
 
 3. **Apply the Kubernetes manifests**:
@@ -105,16 +105,15 @@ If you want to run the app locally without Docker:
 - The app stores todos in a `todos.json` file
 - Settings are stored in the session state and reset when the app is restarted
 - The default port is 9999, but you can modify it in the Dockerfile if needed
-- When deployed to k3d, the app is accessible on port 7777 through the ingress controller
-  at the path /todo
+- When deployed to k3d, the app is accessible on port 7777 through the ingress controller at the /todo path
 
 ## Troubleshooting
 
 If you encounter any issues:
 
 1. **Port already in use**:
-   - Make sure no other service is using port 9999
-   - You can change the port in the Dockerfile and update the run command accordingly
+   - Make sure no other service is using port 7777
+   - You can change the port in the k3d cluster creation command
 
 2. **Container won't start**:
    - Check if the image built successfully
@@ -130,4 +129,5 @@ If you encounter any issues:
    - Verify the cluster is running: `k3d cluster list`
    - Check pod status: `kubectl get pods`
    - Check ingress status: `kubectl get ingress`
-   - View pod logs: `kubectl logs -l app=todo-app` 
+   - View pod logs: `kubectl logs -l app=todo-app`
+   - Check Traefik dashboard: `kubectl port-forward -n kube-system svc/traefik 9000:9000` and visit http://localhost:9000/dashboard/ 
