@@ -9,10 +9,10 @@ spec:
   rules:
   - http:
       paths:
-      - path: /
+      - path: /todo
         pathType: Prefix
         backend:
           service:
             name: todo-app
             port:
-              number: 9999 
+              number: 80 
