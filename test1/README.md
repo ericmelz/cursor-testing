@@ -45,12 +45,12 @@ A simple, customizable todo application built with Streamlit and Dockerized for 
 
 1. **Create a k3d cluster**:
    ```bash
-   k3d cluster create dev-cluster -p "7777:80@loadbalancer"
+   k3d cluster create dev -p "7777:80@loadbalancer"
    ```
 
 2. **Load the Docker image into k3d**:
    ```bash
-   k3d image import todo-app:latest -c dev-cluster
+   k3d image import todo-app:latest -c dev
    ```
 
 3. **Apply the Kubernetes manifests**:
