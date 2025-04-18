@@ -9,11 +9,13 @@ A simple, customizable todo application built with Streamlit and Dockerized for 
 - Customize the Add button color through settings
 - Persistent storage using JSON
 - Dockerized for easy deployment
+- Kubernetes deployment support
 
 ## Prerequisites
 
 - Docker installed on your system
 - Git (optional, for cloning the repository)
+- k3d installed (for Kubernetes deployment)
 
 ## Building and Running with Docker
 
@@ -31,6 +33,29 @@ A simple, customizable todo application built with Streamlit and Dockerized for 
 3. **Run the container**:
    ```bash
    docker run -p 9999:9999 todo-app
+   ```
+
+4. **Access the application**:
+   Open your web browser and navigate to:
+   ```
+   http://localhost:9999
+   ```
+
+## Deploying to k3d
+
+1. **Create a k3d cluster**:
+   ```bash
+   k3d cluster create todo-cluster -p "9999:80@loadbalancer"
+   ```
+
+2. **Load the Docker image into k3d**:
+   ```bash
+   k3d image import todo-app:latest -c todo-cluster
+   ```
+
+3. **Apply the Kubernetes manifests**:
+   ```bash
+   kubectl apply -f k8s/
    ```
 
 4. **Access the application**:
@@ -80,6 +105,7 @@ If you want to run the app locally without Docker:
 - The app stores todos in a `todos.json` file
 - Settings are stored in the session state and reset when the app is restarted
 - The default port is 9999, but you can modify it in the Dockerfile if needed
+- When deployed to k3d, the app is accessible on port 9999 through the ingress controller
 
 ## Troubleshooting
 
@@ -97,4 +123,10 @@ If you encounter any issues:
 3. **App not accessible**:
    - Ensure the container is running
    - Verify the port mapping is correct
-   - Check your firewall settings 
+   - Check your firewall settings
+
+4. **k3d deployment issues**:
+   - Verify the cluster is running: `k3d cluster list`
+   - Check pod status: `kubectl get pods`
+   - Check ingress status: `kubectl get ingress`
+   - View pod logs: `kubectl logs -l app=todo-app` 
