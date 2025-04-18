@@ -45,12 +45,12 @@ A simple, customizable todo application built with Streamlit and Dockerized for 
 
 1. **Create a k3d cluster**:
    ```bash
-   k3d cluster create todo-cluster -p "9999:80@loadbalancer"
+   k3d cluster create dev-cluster -p "7777:80@loadbalancer"
    ```
 
 2. **Load the Docker image into k3d**:
    ```bash
-   k3d image import todo-app:latest -c todo-cluster
+   k3d image import todo-app:latest -c dev-cluster
    ```
 
 3. **Apply the Kubernetes manifests**:
@@ -61,7 +61,7 @@ A simple, customizable todo application built with Streamlit and Dockerized for 
 4. **Access the application**:
    Open your web browser and navigate to:
    ```
-   http://localhost:9999
+   http://localhost:7777/todo
    ```
 
 ## Docker Commands
@@ -105,7 +105,8 @@ If you want to run the app locally without Docker:
 - The app stores todos in a `todos.json` file
 - Settings are stored in the session state and reset when the app is restarted
 - The default port is 9999, but you can modify it in the Dockerfile if needed
-- When deployed to k3d, the app is accessible on port 9999 through the ingress controller
+- When deployed to k3d, the app is accessible on port 7777 through the ingress controller
+  at the path /todo
 
 ## Troubleshooting
 
