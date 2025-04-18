@@ -19,8 +19,8 @@ A simple, customizable todo application built with Streamlit and Dockerized for 
 
 1. **Clone the repository** (if you haven't already):
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone git@github.com:ericmelz/cursor-testing.git
+   cd cursor-testing/test1
    ```
 
 2. **Build the Docker image**:
