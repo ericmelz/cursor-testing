@@ -49,6 +49,42 @@ db.serialize(() => {
                     ingredients: "Flour, Sugar, Eggs, Butter, Vanilla",
                     instructions: "1. Mix ingredients\n2. Bake\n3. Decorate",
                     mood: "happy"
+                },
+                {
+                    name: "Comforting Chicken Enchiladas",
+                    ingredients: "Chicken, Tortillas, Enchilada Sauce, Cheese, Onion, Garlic",
+                    instructions: "1. Cook and shred chicken\n2. Mix with sauce and cheese\n3. Roll in tortillas\n4. Bake until bubbly",
+                    mood: "sad"
+                },
+                {
+                    name: "Energizing Breakfast Burrito",
+                    ingredients: "Eggs, Chorizo, Potatoes, Cheese, Tortilla, Salsa",
+                    instructions: "1. Cook chorizo and potatoes\n2. Scramble eggs\n3. Combine in tortilla\n4. Top with salsa",
+                    mood: "tired"
+                },
+                {
+                    name: "Fiesta Nachos",
+                    ingredients: "Tortilla Chips, Cheese, Beans, Jalapeños, Sour Cream, Guacamole",
+                    instructions: "1. Layer chips and toppings\n2. Bake until cheese melts\n3. Add fresh toppings",
+                    mood: "happy"
+                },
+                {
+                    name: "Soothing Tortilla Soup",
+                    ingredients: "Chicken, Tomatoes, Onion, Garlic, Cilantro, Avocado, Tortilla Strips",
+                    instructions: "1. Sauté vegetables\n2. Add broth and chicken\n3. Simmer\n4. Top with fresh ingredients",
+                    mood: "sad"
+                },
+                {
+                    name: "Spicy Huevos Rancheros",
+                    ingredients: "Eggs, Tortillas, Beans, Salsa, Avocado, Cilantro",
+                    instructions: "1. Fry eggs\n2. Warm tortillas\n3. Layer with beans\n4. Top with salsa and avocado",
+                    mood: "tired"
+                },
+                {
+                    name: "Party Quesadillas",
+                    ingredients: "Tortillas, Cheese, Chicken, Bell Peppers, Onions, Salsa",
+                    instructions: "1. Layer ingredients\n2. Cook until golden\n3. Cut into wedges\n4. Serve with salsa",
+                    mood: "happy"
                 }
             ];
 
