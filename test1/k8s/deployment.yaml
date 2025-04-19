@@ -18,6 +18,9 @@ spec:
       - name: todo-app
         image: ghcr.io/ericmelz/todo-app:latest
         imagePullPolicy: Always
+        args:
+          - "--server.baseUrlPath"
+          - "/todo"        
         ports:
         - containerPort: 9999
         resources:
