@@ -1,7 +1,7 @@
 {
-  "name": "mood-recipe-app",
+  "name": "moodbites",
   "version": "1.0.0",
-  "description": "A mood-based recipe recommendation app",
+  "description": "A mood-based recipe recommendation app that suggests recipes based on your current emotional state",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

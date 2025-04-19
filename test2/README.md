@@ -1,6 +1,6 @@
-# Mood Recipe Recommender
+# MoodBites
 
-A simple web application that recommends recipes based on your current mood.
+A delightful web application that serves up the perfect recipe based on your current mood. Whether you're feeling happy, sad, tired, or excited, MoodBites has the perfect culinary companion for your emotional state.
 
 ## Features
 
@@ -38,4 +38,8 @@ A simple web application that recommends recipes based on your current mood.
 1. Select your current mood from the dropdown menu
 2. Click "Get Recipe" to receive a recipe recommendation
 3. View the recipe details including ingredients and instructions
-4. If you don't like the recipe, click "Get Another Recipe" to get a different recommendation 
+4. If you don't like the recipe, click "Get Another Recipe" to get a different recommendation
+
+## Why MoodBites?
+
+MoodBites understands that food and emotions are deeply connected. Whether you need comfort food for a bad day or a celebratory dish for a good one, we've got you covered with perfectly matched recipes for every mood. 
