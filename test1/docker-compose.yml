@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  todo-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: todo-app:latest
+    container_name: todo-app
+    ports:
+      - "9999:9999"
+    volumes:
+      - ./todos.json:/app/todos.json
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:9999/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3 

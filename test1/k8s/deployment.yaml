@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
       - name: todo-app
-        image: todo-app:latest
-        imagePullPolicy: Never  # Since we're using local image in k3d
+        image: ghcr.io/ericmelz/todo-app:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 9999
         resources:

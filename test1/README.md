@@ -10,12 +10,15 @@ A simple, customizable todo application built with Streamlit and Dockerized for 
 - Persistent storage using JSON
 - Dockerized for easy deployment
 - Kubernetes deployment support
+- GitHub Container Registry integration
+- GitHub Actions CI/CD pipeline
 
 ## Prerequisites
 
 - Docker installed on your system
 - Git (optional, for cloning the repository)
 - k3d installed (for Kubernetes deployment)
+- GitHub account (for GitHub Container Registry)
 
 ## Building and Running with Docker
 
@@ -41,17 +44,75 @@ A simple, customizable todo application built with Streamlit and Dockerized for 
    http://localhost:9999
    ```
 
-## Deploying to k3d
+## Using Docker Compose
+
+For local development with data persistence, you can use Docker Compose:
+
+1. **Start the application**:
+   ```bash
+   docker-compose up -d
+   ```
+
+2. **Access the application**:
+   ```
+   http://localhost:9999
+   ```
+
+3. **Stop the application**:
+   ```bash
+   docker-compose down
+   ```
+
+## Pushing to GitHub Container Registry
+
+### Manual Push
+
+1. **Log in to GitHub Container Registry**:
+   ```bash
+   echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
+   ```
+   > Note: Replace `$CR_PAT` with your GitHub Personal Access Token and `USERNAME` with your GitHub username.
+
+2. **Tag your image**:
+   ```bash
+   docker tag todo-app ghcr.io/USERNAME/todo-app:latest
+   ```
+   > Note: Replace `USERNAME` with your GitHub username.
+
+3. **Push the image**:
+   ```bash
+   docker push ghcr.io/USERNAME/todo-app:latest
+   ```
+   > Note: Replace `USERNAME` with your GitHub username.
+
+4. **Make the package public** (optional):
+   Go to your GitHub profile, click on "Packages", find the `todo-app` package, and set its visibility to "Public" in the package settings.
+
+### Automated Push with GitHub Actions
+
+This repository includes a GitHub Actions workflow that automatically builds and pushes the Docker image to GHCR whenever:
+- Changes are pushed to the main branch
+- A new tag is created (v*.*.*)
+- A pull request is created against the main branch
+
+To use this feature:
+1. Fork or clone this repository
+2. Ensure your repository has the `GITHUB_TOKEN` secret with package write permissions
+3. Push changes to the main branch or create a new tag
+
+## Deploying to k3d from GitHub Container Registry
 
 1. **Create a k3d cluster**:
    ```bash
    k3d cluster create todo-cluster -p "7777:80@loadbalancer"
    ```
 
-2. **Load the Docker image into k3d**:
-   ```bash
-   k3d image import todo-app:latest -c todo-cluster
+2. **Update deployment image** (if necessary):
+   Edit `k8s/deployment.yaml` to use your GHCR image:
+   ```yaml
+   image: ghcr.io/USERNAME/todo-app:latest
    ```
+   > Note: Replace `USERNAME` with your GitHub username.
 
 3. **Apply the Kubernetes manifests**:
    ```bash
@@ -106,6 +167,7 @@ If you want to run the app locally without Docker:
 - Settings are stored in the session state and reset when the app is restarted
 - The default port is 9999, but you can modify it in the Dockerfile if needed
 - When deployed to k3d, the app is accessible on port 7777 through the ingress controller at the /todo path
+- For persistent storage in Kubernetes, consider using a PersistentVolume for the todos.json file
 
 ## Troubleshooting
 
@@ -130,4 +192,9 @@ If you encounter any issues:
    - Check pod status: `kubectl get pods`
    - Check ingress status: `kubectl get ingress`
    - View pod logs: `kubectl logs -l app=todo-app`
-   - Check Traefik dashboard: `kubectl port-forward -n kube-system svc/traefik 9000:9000` and visit http://localhost:9000/dashboard/ 
+   - Check Traefik dashboard: `kubectl port-forward -n kube-system svc/traefik 9000:9000` and visit http://localhost:9000/dashboard/
+
+5. **GHCR authentication issues**:
+   - Make sure your GitHub PAT has the right scopes (`read:packages`, `write:packages`, `delete:packages`)
+   - Verify you're correctly logged in: `docker login ghcr.io`
+   - Check image permissions on GitHub 
