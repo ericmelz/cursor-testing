@@ -1,12 +1,13 @@
-name: Todo App CI/CD
+name: Todo App Docker Publish
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
+    tags: [ 'v*.*.*' ]
     paths:
       - 'test1/**'
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
     paths:
       - 'test1/**'
   workflow_dispatch:
@@ -51,13 +52,13 @@ jobs:
           context: ./test1
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          labels: ${{ steps.meta.outputs.labels }} 
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
     environment: production
-    # if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
 
     steps:
       - name: Checkout Repository
@@ -125,4 +126,4 @@ jobs:
             
             # Check if the ingress is configured
             kubectl get ingress todo-app
-          EOF 
+          EOF           
