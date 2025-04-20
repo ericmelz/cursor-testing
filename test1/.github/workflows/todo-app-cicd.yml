@@ -57,7 +57,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment: production
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
 
     steps:
       - name: Checkout Repository
