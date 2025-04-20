@@ -101,39 +101,21 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          ssh -i ~/.ssh/id_ed25519 deployer@emelz.com << 'EOF'
-            # setup env vars, especially, KUBECONFIG
-            source ~/.bashrc 2>/dev/null
-            echo "*1 KUBECONFIG=$KUBECONFIG"
-
-            # FORCE KUBCONFIG TO BE SET
-            export KUBECONFIG="$HOME/.kube/config"
-            echo "*2 KUBECONFIG=$KUBECONFIG"
-
-            # Apply the Kubernetes manifests
-            kubectl apply -f ~/k8s-manifests/todo-app/
-            
-            # Wait for the deployment to roll out
-            kubectl rollout status deployment/todo-app --timeout=180s
-            
-            # Check if the deployment was successful
+          ssh -i ~/.ssh/id_ed25519 deployer@emelz.com bash -lc '
+            kubectl apply -f ~/k8s-manifests/todo-app/ &&
+            kubectl rollout status deployment/todo-app --timeout=180s &&
             if [ $? -eq 0 ]; then
               echo "Deployment successful!"
             else
               echo "Deployment failed!"
               exit 1
             fi
-EOF
+          '            
 
       - name: Verify Deployment
         run: |
-          ssh -i ~/.ssh/id_ed25519 deployer@emelz.com << 'EOF'
-            # Get the pod status
-            kubectl get pods -l app=todo-app
-            
-            # Check if the service is running
-            kubectl get svc todo-app
-            
-            # Check if the ingress is configured
+          ssh -i ~/.ssh/id_ed25519 deployer@emelz.com bash -lc '
+            kubectl get pods -l app=todo-app &&
+            kubectl get svc todo-app &&
             kubectl get ingress todo-app
-EOF           
+          '
