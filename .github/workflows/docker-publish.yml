@@ -6,10 +6,12 @@ on:
     tags: [ 'v*.*.*' ]
     paths:
       - 'test1/**'
+      - '.github/workflows/**'
   pull_request:
     branches: [ "master" ]
     paths:
       - 'test1/**'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 env:
