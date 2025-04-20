@@ -101,7 +101,9 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          ssh -i ~/.ssh/id_ed25519 deployer@emelz.com bash -lc '
+          ssh -i ~/.ssh/id_ed25519 deployer@emelz.com '
+            export KUBECONFIG=/home/deployer/.kubeconfig &&
+            echo "*1 KUBCONFIG=$KUBCONFIG"
             kubectl apply -f ~/k8s-manifests/todo-app/ &&
             kubectl rollout status deployment/todo-app --timeout=180s &&
             if [ $? -eq 0 ]; then
@@ -114,7 +116,9 @@ jobs:
 
       - name: Verify Deployment
         run: |
-          ssh -i ~/.ssh/id_ed25519 deployer@emelz.com bash -lc '
+          ssh -i ~/.ssh/id_ed25519 deployer@emelz.com '
+            export KUBECONFIG=/home/deployer/.kubeconfig &&
+            echo "*2 KUBCONFIG=$KUBCONFIG"
             kubectl get pods -l app=todo-app &&
             kubectl get svc todo-app &&
             kubectl get ingress todo-app
