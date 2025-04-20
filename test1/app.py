@@ -24,7 +24,7 @@ def load_todos():
 # Load todos when the app starts
 load_todos()
 
-st.title("📝 Simple Todo App")
+st.title("📝 Simple Todo App!")
 
 # Settings section
 with st.expander("⚙️ Settings"):
