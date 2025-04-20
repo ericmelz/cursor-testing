@@ -2,12 +2,12 @@ name: Todo App Docker Publish
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
     tags: [ 'v*.*.*' ]
     paths:
       - 'test1/**'
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
     paths:
       - 'test1/**'
 
