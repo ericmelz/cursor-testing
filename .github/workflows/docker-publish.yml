@@ -123,7 +123,7 @@ jobs:
               echo "Deployment failed!"
               exit 1
             fi
-          EOF
+EOF
 
       - name: Verify Deployment
         run: |
@@ -136,4 +136,4 @@ jobs:
             
             # Check if the ingress is configured
             kubectl get ingress todo-app
-          EOF           
+EOF           
