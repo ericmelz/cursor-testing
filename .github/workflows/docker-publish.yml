@@ -104,6 +104,11 @@ jobs:
           ssh -i ~/.ssh/id_ed25519 deployer@emelz.com << 'EOF'
             # setup env vars, especially, KUBECONFIG
             source ~/.bashrc 2>/dev/null
+            echo "*1 KUBECONFIG=$KUBECONFIG"
+
+            # FORCE KUBCONFIG TO BE SET
+            export KUBECONFIG="$HOME/.kube/config"
+            echo "*2 KUBECONFIG=$KUBECONFIG"
 
             # Apply the Kubernetes manifests
             kubectl apply -f ~/k8s-manifests/todo-app/
