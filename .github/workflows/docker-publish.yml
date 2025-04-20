@@ -1,11 +1,15 @@
-name: Docker Publish
+name: Todo App Docker Publish
 
 on:
   push:
     branches: [ "main" ]
     tags: [ 'v*.*.*' ]
+    paths:
+      - 'test1/**'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'test1/**'
 
 env:
   REGISTRY: ghcr.io
@@ -44,7 +48,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ./test1
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }} 
